@@ -1,0 +1,20 @@
+{
+  "name": "蜻蜓视频解析",
+  "version": "0.0.1",
+  "description": "蜻蜓视频解析chrome插件",
+  "permissions": ["downloads", "contextMenus", "tabs"],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "page_action": {
+    "default_popup": "popup.html"
+  }
+}
