@@ -1,0 +1,1 @@
+window.QingTing = '蜻蜓视频解析'
