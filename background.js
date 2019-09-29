@@ -129,11 +129,12 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 })
 
 let downloadVideo = (body) => {
+  console.log(body)
   chrome.downloads.download({
     url: body.message,
     filename: downloadPath + '/' + body.title + '.' + body.ext
   }, (res) => {
-    if (!res) sendDownloadFailMessage(url)
+    if (!res) sendDownloadFailMessage(body.message)
   })
 }
 
