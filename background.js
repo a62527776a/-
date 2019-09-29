@@ -1,6 +1,7 @@
 // var url = 'https://ytb.dscsdoj.top/'
-var url = 'http://localhost:8080/'
+var url = 'http://localhost:8082/'
 const notificationsId = '蜻蜓视频解析'
+const downloadPath = 'qingtingvideo'
 
 var handleParsePages = async function (active) {
   let queryTabId = await queryPageTabId()
@@ -51,7 +52,25 @@ let sendParseUrlMessage = async (tabId) => {
   })
 }
 
-let sendMessageToTab = (TabId, message) => {
+let sendDownloadFailMessage = async (message) => {
+  let tabId = await queryPageTabId()
+  if (!tabId) return
+  sendMessageToTab(tabId, {
+    actions: 'chrome.downloads.download.fail',
+    message
+  })
+}
+
+let sendDownloadDataMessage = async (data) => {
+  let tabId = await queryPageTabId()
+  if (!tabId) return
+  sendMessageToTab(tabId, {
+    actions: 'chrome.downloads.search.data',
+    data
+  })
+}
+
+let sendMessageToTab = async (TabId, message) => {
   return new Promise(resolve => {
     chrome.tabs.sendMessage(TabId, message, res => {
       resolve(res)
@@ -98,22 +117,33 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.actions === 'notice') {
     createNotifications(request.message)
   }
-  // if (request.actions === 'chrome.downloads.search') {
-  //   return getDownloadSearch()
-  // }
+  if (request.actions === 'chrome.downloads.search.get') {
+    return getDownloadSearch()
+  }
   if (request.actions === 'chrome.downloads.download') {
-    return downloadVideo(request.message)
+    return downloadVideo(request)
+  }
+  if (request.actions === 'chrome.downloads.download.open') {
+    return openDownloadItem(request.message)
   }
 })
 
-let downloadVideo = (url) => {
-  
+let downloadVideo = (body) => {
   chrome.downloads.download({
-    url,
-    filename: '蜻蜓视频解析'
+    url: body.message,
+    filename: downloadPath + '/' + body.title + '.' + body.ext,
+    saveAs: false
+  }, (res) => {
+    if (!res) sendDownloadFailMessage(url)
   })
 }
 
+let openDownloadItem = downloadId => {
+  chrome.downloads.open(downloadId)
+}
+
 let getDownloadSearch = () => {
-  chrome.downloads.search()
+  chrome.downloads.search({query: [downloadPath]}, (res) => {
+    sendDownloadDataMessage(res)
+  })
 }

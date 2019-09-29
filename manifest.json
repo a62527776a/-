@@ -2,7 +2,7 @@
   "name": "蜻蜓视频解析",
   "version": "0.0.1",
   "description": "蜻蜓视频解析chrome插件",
-  "permissions": ["downloads", "contextMenus", "tabs", "notifications"],
+  "permissions": ["downloads", "contextMenus", "tabs", "notifications", "downloads.open"],
   "manifest_version": 2,
   "web_accessible_resources" : ["/my.js"],
   "background": {
@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://ytb.dscsdoj.top/*", "http://localhost:8080/*"],
+      "matches": ["https://ytb.dscsdoj.top/*", "http://localhost:8080/*", "http://localhost:8082/*"],
       "js": ["contentScript.js"]
     }
   ],
