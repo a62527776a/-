@@ -131,8 +131,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 let downloadVideo = (body) => {
   chrome.downloads.download({
     url: body.message,
-    filename: downloadPath + '/' + body.title + '.' + body.ext,
-    saveAs: false
+    filename: downloadPath + '/' + body.title + '.' + body.ext
   }, (res) => {
     if (!res) sendDownloadFailMessage(url)
   })
