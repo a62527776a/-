@@ -1,5 +1,5 @@
-// var url = 'https://ytb.dscsdoj.top/'
-var url = 'http://localhost:8082/'
+var url = 'https://ytb.dscsdoj.top/'
+// var url = 'http://localhost:8082/'
 const notificationsId = '蜻蜓视频解析'
 const downloadPath = 'qingtingvideo'
 
