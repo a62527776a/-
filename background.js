@@ -1,7 +1,6 @@
 var url = 'https://ytb.dscsdoj.top/'
 // var url = 'http://localhost:8082/'
 const notificationsId = '蜻蜓视频解析'
-const downloadPath = 'qingtingvideo'
 
 var handleParsePages = async function (active) {
   let queryTabId = await queryPageTabId()
@@ -78,72 +77,30 @@ let sendMessageToTab = async (TabId, message) => {
   })
 }
 
-chrome.runtime.onInstalled.addListener(function() {
-  console.log("蜻蜓视频解析欢迎您 - " + url);
-});
-
-chrome.contextMenus.create({
-  id: 'iggcdnibfnjahamihceeihmbipmpojcc',
-  title: '解析该网页 - 蜻蜓视频解析'
-})
-
 chrome.contextMenus.onClicked.addListener(function(info) {
   if (info.menuItemId == "iggcdnibfnjahamihceeihmbipmpojcc") {
     handleParsePages()
   }
 })
 
-let createNotifications = (message) => {
-  chrome.notifications.clear(notificationsId)
-  chrome.notifications.create(notificationsId, {
-    type: 'basic',
-    iconUrl: 'logo.png',
-    title: '蜻蜓视频解析',
-    message: message
-  })
-}
-
 chrome.notifications.onClicked.addListener(async (notificationId) => {
   if (notificationId === notificationsId) {
-    let tabId = await queryPageTabId()
-    chrome.tabs.update(tabId, {
-      active: true
-    })
+    tabsFn.activeMyTab()
   }
 })
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   if (!sender.tab) return
   if (request.actions === 'notice') {
-    createNotifications(request.message)
+    return notificationsFn.createNotifications(request.message)
   }
   if (request.actions === 'chrome.downloads.search.get') {
-    return getDownloadSearch()
+    return downloadFn.getDownloadSearch(sendDownloadDataMessage)
   }
   if (request.actions === 'chrome.downloads.download') {
-    return downloadVideo(request)
+    return downloadFn.downloadVideo(request, sendDownloadFailMessage)
   }
   if (request.actions === 'chrome.downloads.download.open') {
-    return openDownloadItem(request.message)
+    return downloadFn.openDownloadItem(request.message)
   }
 })
-
-let downloadVideo = (body) => {
-  console.log(body)
-  chrome.downloads.download({
-    url: body.message,
-    filename: downloadPath + '/' + body.title + '.' + body.ext
-  }, (res) => {
-    if (!res) sendDownloadFailMessage(body.message)
-  })
-}
-
-let openDownloadItem = downloadId => {
-  chrome.downloads.open(downloadId)
-}
-
-let getDownloadSearch = () => {
-  chrome.downloads.search({query: [downloadPath]}, (res) => {
-    sendDownloadDataMessage(res)
-  })
-}
