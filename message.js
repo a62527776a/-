@@ -1,5 +1,22 @@
 const messageFn = {
-  sendParseUrlMessage: (tabId) => {
+  init: () => {
+    chrome.runtime.onMessage.addListener((request, sender) => {
+      if (!sender.tab) return
+      if (request.actions === 'notice') {
+        return notificationsFn.createNotifications(request.message)
+      }
+      if (request.actions === 'chrome.downloads.search.get') {
+        return downloadFn.getDownloadSearch(messageFn.sendDownloadDataMessage)
+      }
+      if (request.actions === 'chrome.downloads.download') {
+        return downloadFn.downloadVideo(request, messageFn.sendDownloadFailMessage)
+      }
+      if (request.actions === 'chrome.downloads.download.open') {
+        return downloadFn.openDownloadItem(request.message)
+      }
+    })    
+  },
+  sendParseUrlMessage: async (tabId) => {
     let currentTab = await tabsFn.getCurrentTab()
     messageFn.sendMessageToTab(tabId, {
       actions: 'parseUrl',
@@ -20,7 +37,7 @@ const messageFn = {
       resolve(res)
     })
   },
-  sendDownloadDataMessage: data => {
+  sendDownloadDataMessage: async data => {
     let tabId = await tabsFn.queryMyPageTabId()
     if (!tabId) return
     messageFn.sendMessageToMyTab({
@@ -28,10 +45,10 @@ const messageFn = {
       data
     })
   },
-  sendDownloadFailMessage: message => {
+  sendDownloadFailMessage: async message => {
     let tabId = await tabsFn.queryMyPageTabId()
     if (!tabId) return
-    sendMessageToTab(tabId, {
+    messageFn.sendMessageToTab(tabId, {
       actions: 'chrome.downloads.download.fail',
       message
     })

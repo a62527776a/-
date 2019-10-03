@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "web_accessible_resources" : ["/my.js"],
   "background": {
-    "scripts": ["background.js", "download.js", "notifications"],
+    "scripts": ["download.js", "notifications.js", "contextMenus.js", "message.js", "tabs.js", "background.js"],
     "persistent": false
   },
   "content_scripts": [

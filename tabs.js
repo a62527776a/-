@@ -1,4 +1,5 @@
 const url = 'https://ytb.dscsdoj.top/'
+// const url = 'http://localhost:8080/'
 
 const tabsFn = {
   handleParsePages: async () => {
@@ -33,7 +34,7 @@ const tabsFn = {
       })
     })
   },
-  activeMyTab: () => {
+  activeMyTab: async () => {
     let tabId = await tabsFn.queryMyPageTabId()
     chrome.tabs.update(tabId, {
       active: true
