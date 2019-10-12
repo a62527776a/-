@@ -9,4 +9,5 @@
 [点我下载](https://github.com/a62527776a/QingTingVideoParsePlugin/releases/latest/download/youtube-dl-chrome-plugins.crx)
 
 对于chrome浏览器
-下载源码后通过开发者模式加载源码
+由于新版chrome已经不支持直接启动
+所以需要下载源码后通过开发者模式加载源码
