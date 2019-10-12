@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://ytb.dscsdoj.top/*", "http://localhost:8080/*", "http://localhost:8082/*"],
+      "matches": ["https://ytb.dscsdoj.top/*", "http://localhost:8080/*", "http://localhost:8081/*", "http://localhost:8082/*"],
       "js": ["contentScript.js"]
     }
   ],
