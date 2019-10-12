@@ -5,4 +5,4 @@
 拥有增强右键菜单栏，通知，下载管理等功能
 
 本插件下载后双击打开
-[点我下载](https://github.com/a62527776a/QingTingVideoParsePlugin/releases/download/latest/youtube-dl-chrome-plugins.crx)
+[点我下载](https://github.com/a62527776a/QingTingVideoParsePlugin/releases/latest/download/youtube-dl-chrome-plugins.crx)
