@@ -14,7 +14,10 @@ const messageFn = {
       if (request.actions === 'chrome.downloads.download.open') {
         return downloadFn.openDownloadItem(request.message)
       }
-    })    
+      if (request.actions === 'chrome.downloads.download.dir.open') {
+        return downloadFn.postOpenDownloadDirMessage()
+      }
+    })
   },
   sendParseUrlMessage: async (tabId) => {
     let currentTab = await tabsFn.getCurrentTab()

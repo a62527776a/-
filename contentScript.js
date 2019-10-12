@@ -24,6 +24,9 @@ window.addEventListener("message", async (event) => {
   if (event.data && event.data.actions === 'chrome.downloads.download.open') {
     chrome.runtime.sendMessage(event.data)
   }
+  if (event.data && event.data.actions === 'chrome.downloads.download.dir.open') {
+    chrome.runtime.sendMessage(event.data)
+  }
 })
 
 function injectScript(file, node) {
