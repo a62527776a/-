@@ -1,6 +1,6 @@
 {
   "name": "蜻蜓视频解析",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "蜻蜓视频解析chrome插件",
   "permissions": ["downloads", "contextMenus", "tabs", "notifications", "downloads.open"],
   "manifest_version": 2,
