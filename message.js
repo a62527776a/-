@@ -15,7 +15,7 @@ const messageFn = {
         return downloadFn.openDownloadItem(request.message)
       }
       if (request.actions === 'chrome.downloads.download.dir.open') {
-        return downloadFn.postOpenDownloadDirMessage()
+        return downloadFn.postOpenDownloadDirMessage(request.message)
       }
     })
   },

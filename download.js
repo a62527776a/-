@@ -17,7 +17,7 @@ const downloadFn = {
       if (!res) cb(body.message)
     })
   },
-  postOpenDownloadDirMessage: () => {
-    chrome.downloads.showDefaultFolder()
+  postOpenDownloadDirMessage: downloadId => {
+    chrome.downloads.show(downloadId)
   }
 }
